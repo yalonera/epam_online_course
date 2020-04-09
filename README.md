@@ -11,19 +11,19 @@ Part2:
 
 Part3:  
 1)string as array     
-2)working with a string as an object of type String or StringBuilder
+2)working with a string as an object of type String or StringBuilder  
 3)working with regular expressions (Pattern, Matcher) 
 
-Part4: 
+Part4:  
 1)the simplest classes and objects  
 2)aggregation and composition 
 
-Part5:
+Part5:  
 1)basics of OOP 
 
-Part6:
+Part6:  
 1)console application "home library"  
 2)console application "notebook"  
-3)client-server application "аrchive"
+3)client-server application "аrchive"   
 4)multithreading "port"
 
