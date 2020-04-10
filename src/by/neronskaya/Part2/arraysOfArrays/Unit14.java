@@ -32,3 +32,4 @@ public class Unit14 {
         Random generator = new Random();
         return generator.nextInt(range);
     }
+}

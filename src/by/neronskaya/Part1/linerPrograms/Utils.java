@@ -11,4 +11,12 @@ public class Utils {
         }
         return scan.nextInt();
     }
+    public static double doubleScanner(String message) {
+        System.out.println(message);
+        Scanner scan = new Scanner(System.in);
+        while (!scan.hasNextDouble()) {
+            scan.next();
+        }
+        return scan.nextDouble();
+    }
 }
