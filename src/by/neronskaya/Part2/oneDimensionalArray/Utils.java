@@ -15,7 +15,7 @@ public class Utils {
     public static int[] fillArrayWithRandom(int a) {
         int[] array = new int[a];
         for (int i = 0; i < a; i++) {
-            array[i] = (int) (Math.random() * 101);
+            array[i] = (int) ((Math.random() * 100)-50);
         }
         return array;
     }
