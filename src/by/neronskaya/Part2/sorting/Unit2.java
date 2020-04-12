@@ -1,9 +1,9 @@
 package by.neronskaya.Part2.sorting;
 
 /*
-Заданы два одномерных массива с различным количеством элементов и натуральное число k. Объединить их в
-один массив, включив второй массив между k-м и (k+1) - м элементами первого, при этом не используя
-дополнительный массив.
+Даны две последовательности. Образовать из них новую последовательность
+чисел так, чтобы она тоже была неубывающей. Примечание.
+Дополнительный массив не использовать.
  */
 
 /**
@@ -13,27 +13,39 @@ package by.neronskaya.Part2.sorting;
  * fromIndex - индекс в массиве from начиная с которого берем элементы для копирования
  * toIndex - индекс в массиве to начиная с которого вставляем элементы
  * count - количество элементов которые берем из массива from и вставляем в массив to
- * Массив to должен иметь достаточный размер, чтобы в нем уместились все копируемые элементы.
  */
-public class Unit1 {
+public class Unit2 {
     public static void main(String[] args) {
         int sizeFirstArr = Utils.scanner("Введите размер первого массива");
         int sizeSecArr = Utils.scanner("Введите размер второго массива");
         int[] firstArr = Utils.fillArrayWithRandom(sizeFirstArr);
         int[] secArr = Utils.fillArrayWithRandom(sizeSecArr);
-        int k = Utils.scanner("Введите индекс для вставки массива");
         int[] newArr = new int[sizeFirstArr + sizeSecArr];
+        System.arraycopy(firstArr, 0, newArr, 0, sizeFirstArr);
+        System.arraycopy(secArr, 0, newArr, sizeFirstArr, sizeSecArr);
 
-        System.arraycopy(firstArr, 0, newArr, 0, k);
-        System.arraycopy(secArr, 0, newArr, k, sizeSecArr);
-        System.arraycopy(firstArr, sizeFirstArr - 1 - k, newArr, sizeSecArr + k, sizeFirstArr - k);
-
-        System.out.println("Первый массив:");
+        System.out.print("Первый ");
         Utils.printArray(firstArr);
-        System.out.println("Второй массив:");
+        System.out.print("Второй ");
         Utils.printArray(secArr);
-        Utils.printArray(newArr);
+        System.out.println("Результат:");
+        Utils.printArray(bubbleSort(newArr));
 
 
     }
+
+    private static int[] bubbleSort(int[] arr) {
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int buffer = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = buffer;
+                }
+            }
+        }
+        return arr;
+    }
+
+
 }
