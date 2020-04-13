@@ -11,4 +11,18 @@ public class Utils {
         }
         return scan.nextInt();
     }
+    public static int[] fillArrayWithRandom(int a) {
+        int[] array = new int[a];
+        for (int i = 0; i < a; i++) {
+            array[i] = (int) (Math.random() * 101);
+        }
+        return array;
+    }
+    public static void printArray(int[] array, String message) {
+        System.out.println(message);
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i] + "\t");
+        }
+        System.out.println();
+    }
 }

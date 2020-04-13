@@ -19,13 +19,6 @@ public class Utils {
         }
         return array;
     }
-    public static double[] fillDoubArrayWithRandom(int a) {
-        double[] array = new double[a];
-        for (int i = 0; i < a; i++) {
-            array[i] =  Math.random() * 101;
-        }
-        return array;
-    }
 
     public static void printArray(int[] array) {
         System.out.println("Одномерный массив: ");
