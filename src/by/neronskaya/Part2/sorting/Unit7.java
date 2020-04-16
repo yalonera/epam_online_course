@@ -1,9 +1,5 @@
 package by.neronskaya.Part2.sorting;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /*
 Пусть даны две неубывающие последовательности действительных чисел .
 Требуется указать те места, на которые нужно вставлять элементы второй последовательности  в первую
@@ -11,44 +7,58 @@ import java.util.List;
  */
 public class Unit7 {
     public static void main(String[] args) {
-        List<Integer> in = new ArrayList<Integer>() {
-            {
-                add(-10);
-                add(2);
-                add(2);
-                add(5);
-                add(10);
-                add(88);
+        int[] arrayA = {2, 5, 12, 42, 43, 51, 56, 68, 68, 69, 81, 101, 152};
+        int[] arrayB = {1, 15, 22, 31, 42};
+        int[] newArray = arrayA;
+
+        System.out.println("Даны последовательность A:");
+        printArray(arrayA);
+        System.out.println("\nи последовательность B:");
+        printArray(arrayB);
+
+        for (int element : arrayB) {
+            int pointInsert = nextInsert(newArray, element);
+            int[] arrayTemp = new int[newArray.length + 1];
+            for (int i = 0; i < newArray.length; i++) {
+                if (pointInsert > i) {
+                    arrayTemp[i] = newArray[i];
+                } else if (pointInsert == i) {
+                    arrayTemp[i] = element;
+                    arrayTemp[i + 1] = newArray[i];
+                } else {
+                    arrayTemp[i + 1] = newArray[i];
+                }
             }
-        };
-        System.out.println("До вставки" + in);
-
-        List<Integer> from = new ArrayList<Integer>() {
-            {
-                add(-1);
-                add(3);
-                add(4);
-                add(7);
-                add(99);
-            }
-        };
-        System.out.println("До вставки" + from);
-
-        List<Integer> indexes = gimmeIndexes(in, from);
-        System.out.println("Куда нужно вставлять, с учетом вставки слева направо " + indexes);
-
-        for (int i = 0; i < indexes.size(); i++) in.add(indexes.get(i), from.get(i));
-        System.out.println("После вставки " + in);
-
+            newArray = arrayTemp;
+            System.out.printf("%n%nПозиция вставки нового элемента \"%d\": i = %d", element, pointInsert);
+            System.out.println("\nНовая последовательность:");
+            printArray(newArray);
+        }
     }
 
-    private static List<Integer> gimmeIndexes(List<Integer> in, List<Integer> from) {
-        List<Integer> result = new ArrayList<>();
-        for (int i = 0; i < from.size(); i++) {
-            int dex = Collections.binarySearch(in, from.get(i));
-            if (dex < 0) result.add(-(dex + 1) + i);
-            else result.add(dex + i);
+    private static int nextInsert(int[] array, int element) {
+        int j = 0;
+        int firstIndex = 0;
+        int lastIndex = array.length - 1;
+
+        while (firstIndex <= lastIndex) {
+            j = (firstIndex + lastIndex) / 2;
+            if (array[j] == element) {
+                return j;
+            } else if (array[j] < element) {
+                firstIndex = j + 1;
+            } else if (array[j] > element && j != 0 && !(array[j - 1] < element)) {
+                lastIndex = j - 1;
+            } else {
+                break;
+            }
         }
-        return result;
+        return j;
+    }
+
+    private static void printArray(int[] a) {
+        for (int element : a) {
+            System.out.printf("%d ", element);
+        }
     }
 }

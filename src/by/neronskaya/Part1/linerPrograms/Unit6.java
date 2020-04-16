@@ -8,20 +8,16 @@ public class Unit6 {
     public static void main(String[] args) {
         int x = Utils.scanner("Введите координату x");
         int y = Utils.scanner("Введите координату y");
-        System.out.println(findFigure(x,y));
+        System.out.println(findFigure(x, y));
 
 
     }
-    private static boolean findFigure(int x,int y){
-        if ((x >= 2 | x <= -2) & (y >= 4 | y <= 0)) {
-            if ((x <= -4 | x >= 4) & y <= -3){
-                return true;
-            }
-        }else {
+
+    private static boolean findFigure(int x, int y) {
+        if ((x >= -4 && x <= 4 && y >= -3 && y <= 0) || (x >= -2 && x <= 2 && y >= 0 && y <= 4)) {
+            return true;
+        } else {
             return false;
         }
-        return false;
     }
-
-
 }

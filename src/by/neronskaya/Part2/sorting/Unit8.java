@@ -1,60 +1,69 @@
 package by.neronskaya.Part2.sorting;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /*
 Даны дроби p1/q1, p2/q2, ..., pn/qn (pi, qi – натуральные).
 Составить программу, которая приводит эти дроби к общему знаменателю и упорядочивает их в порядке возрастания.
  */
 public class Unit8 {
     public static void main(String[] args) {
-        List<Fraction> fs = new ArrayList<>(Arrays.asList(new Fraction(9, 12), new Fraction(1, 2),
-                new Fraction(3, 4), new Fraction(6, 7), new Fraction(1, 5), new Fraction(7, 8),
-                new Fraction(9, 10), new Fraction(1, 2), new Fraction(5, 12), new Fraction(3, 8)));
-        System.out.println("До сортировки: " + fs);
+        Fraction[] array = {new Fraction(1, 3), new Fraction(2, 4),
+                new Fraction(7, 12), new Fraction(5, 12),
+                new Fraction(12, 3), new Fraction(17, 24),
+                new Fraction(5, 6), new Fraction(13, 3)};
 
-        long start = System.currentTimeMillis();
-
-        long lcd = fs.stream().mapToLong(f -> f.d).reduce(1, (d1, d2) -> d1 * d2 / gcd(d1, d2));
-        fs.stream().map(f -> f.setLCD(lcd)).sorted(Fraction::sort).forEach(System.out::println);
-
-        System.out.println((System.currentTimeMillis() - start) * 0.001 + " sec");
+        setCommonDenominator(array);
+        sortFractionArray(array);
+        for (Fraction element : array) {
+            System.out.print(element + ", ");
+        }
+        System.out.print("\b\b");
     }
 
-    static long gcd(long a, long b) {
-        long tmp;
-        while (b != 0) {
-            tmp = a % b;
-            a = b;
-            b = tmp;
+    private static void setCommonDenominator(Fraction[] array) {
+        boolean isCommon = false;
+        int commonDenominator = 0;
+        while (!isCommon) {
+            isCommon = true;
+            commonDenominator++;
+            for (Fraction element : array) {
+                if (commonDenominator % element.denom != 0) {
+                    isCommon = false;
+                }
+            }
         }
-        return a;
+
+        for (Fraction element : array) {
+            element.numer *= (double) commonDenominator / element.denom;
+            element.denom = commonDenominator;
+        }
+    }
+
+    private static void sortFractionArray(Fraction[] array) {
+        for (int i = array.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (array[j].numer > array[j + 1].numer) {
+                    Fraction temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
     }
 
     static class Fraction {
-        long n, d; // numerator, denominator
+        int numer;
+        int denom;
 
-        public Fraction(long n, long d) {
-            this.n = n;
-            this.d = d;
-        }
-
-        public Fraction setLCD(long lcd) {
-            n *= (lcd / d);
-            d = lcd;
-            return this;
+        Fraction(int numer, int denom) {
+            this.numer = numer;
+            this.denom = denom;
         }
 
         @Override
         public String toString() {
-            return String.format("%d/%d", n, d);
-        }
-
-        public static int sort(Fraction f1, Fraction f2) {
-            return Long.compare(f1.n, f2.n);
+            return String.format("%d/%d", numer, denom);
         }
     }
+
 }
 
